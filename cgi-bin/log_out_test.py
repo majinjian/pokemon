@@ -12,36 +12,40 @@ cgitb.enable()
 
 login_form = cgi.FieldStorage()
 
-print "Content-type: text/html"
-print # without printing a blank line, the "end of script output before headers" error will occur
+print "Content-type: application/json"
 
-data = {}
-usrname = login_form["user_id"].value # get the username from the table
-pwd = login_form["password"].value # get the password from the table
-remember = login_form["remember_me"].value # get whether use status saving
 # check the validation of the username and password
 
-# if the remember me checkbox was clicled, set the cookie
-if remember:
-    # print "Hello, I send you a new cookie"
-    cookie = Cookie.SimpleCookie()
+# get the stored cookie
+stored_cookie_string = os.environ.get('HTTP_COOKIE')
 
-    cookie['user_name'] = usrname
-    cookie['password'] = pwd
+# dictionary to store the response name/value pairs before JSON conversion
+# JSON format data that need to send back to client
+data = {}
 
-    # set the expire date
-    expires = datetime.datetime.utcnow() + datetime.timedelta(days=30)
-    cookie["expire"] = expires
+# the client didn't send a cookie
+if not stored_cookie_string:
+    # print "Hello, You don't have cookie."
+
+    print  # without printing a blank line, the "end of script output before headers" error will occur
+    print json.dumps(data)
+
+# else the client DID send a cookie...
+else:
+    # get the cookie
+    cookie = Cookie.SimpleCookie(stored_cookie_string)
+
+    if "user_name" in cookie:
+        cookie["user_name"]["expires"] = 'Thu, 01-Jan-1970 00:00:00 GMT'
+
+    if "password" in cookie:
+        cookie["password"]["expires"] = 'Thu, 01-Jan-1970 00:00:00 GMT'
+
+    # do some username & password verifications
 
     print cookie
+    print
     print json.dumps(data)
-
-# no cookie, user have to login again during the next visit
-else:
-    # print "Hello, I won't send you a cookie."
-    data['user_name'] = usrname
-    print json.dumps(data)
-
 
 
 

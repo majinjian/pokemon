@@ -40,28 +40,19 @@ else:
   # get the cookie
   cookie = Cookie.SimpleCookie(stored_cookie_string)
 
-  # check whether the cookie is expired
-  if cookie["session"]["expire"] >= datetime.datetime.utcnow():
-    # Cookie was expired
-    data['user_name'] = "nil"
+  data = {}
 
-    print json.dumps(data)
+  if "user_name" in cookie:
+    username = cookie["user_name"].value
 
-  else:
-    # print "Hello, I received your cookie."
+  if "password" in cookie:
+    password = cookie["password"].value
+
+  # do some username & password verifications
+
+  data['user_name'] = username
+
+  print json.dumps(data)
+
     
-    data = {}
-
-    if "username" in cookie:
-      username = cookie["username"].value
-
-    if "passowrd" in cookie:
-      password = cookie["password"].value
-
-
-    # do some username & password verifications
-
-    data['user_name'] = username
-
-    print json.dumps(data)
 
