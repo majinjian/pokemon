@@ -34,11 +34,18 @@ var send_cookie = function () {
           console.log("Send Cookie");
           console.log(data);
         	if (data.user_name != "nil") { // return a cookie
-                success_handler(data)
-        	}
-        	else { // no cookie
-	           error_handler();
+            // success_handler(data)
+            login_result = data.result;
+            if (login_result == "success") {
+              success_handler(data);
             }
+            else {
+              login_error(login_result);
+            }
+        	}
+        	else { // no cookie or error
+	           error_handler();
+          }
         },
 
         error: function(request) {   // function to call when the request fails, other errors
@@ -80,12 +87,18 @@ var login = function () {
     // when successfully login
     success: function (data) {
         console.log("Success Login");
-        success_handler(data);
+        login_result = data.result;
+        if (login_result == "success") {
+          success_handler(data);
+        }
+        else {
+          login_error(login_result);
+        }
     },
 
     error: function (request,status, error) {
         console.log("Error Login");
-        console.log(request)
+        console.log(request);
         console.log(error);
         error_handler()
     }
@@ -109,7 +122,7 @@ var logout = function() {
 
         success: function (data) {
             console.log("Success Logout");
-            error_handler()
+            error_handler();
         },
 
         error: function (request) {
@@ -138,6 +151,12 @@ var success_handler = function(data) {
     // console.log(data.password)
 
 }
+
+var login_error = function(err_msg) {
+    error_handler();
+    $('#error_log').html(err_msg);
+}
+
 
 var error_handler = function() {
     $('#home').empty();
