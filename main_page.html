@@ -17,6 +17,8 @@
 	<!-- load jQuery -->
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="./bootstrap-3.3.0/dist/js/bootstrap.min.js"></script>
+    <!-- include JS -->
+    <script type="text/javascript" src="./js/index.js"></script>
 </head>
 <body>
 	<nav class="navbar navbar-inverse" role="navigation">
@@ -27,15 +29,17 @@
 	    <a class="navbar-brand" href="#">Pokemon Go!</a>
 	  </div>
 	  <div class="collapse navbar-collapse" id="navbar-collapse-01">
-	    <ul id="" class="nav navbar-nav">
-	      <li class="active"><a href="#news">Posts</a></li>
-	      <li><a href="#pokemons">Pokemons</a></li>
-	      <li><a href="#profile">Profile</a></li>
+	    <ul id="nav_items" class="nav navbar-nav">
+	      <li class="active" id="home"></li>
+	      <li id="posts"></li>
+	      <li  id="pokemons"></li>
+	      <li  id="profile"></li>
+	      <li id="logout"></li>
 	    </ul>
 	    <!-- Button Trigger Modal -->
-	    <p class="navbar-form navbar-right"><button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#signup_panel" type="button">Sign Up</button></p>
-	    <p class="navbar-form navbar-right"><button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#login_panel" type="button">Sign In</button></p>
-	    <p class="navbar-text navbar-right">Welcome! Sommoner</p>
+	    <p class="navbar-form navbar-right" id="sign_up_btn"><button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#signup_panel" type="button">Sign Up</button></p>
+	    <p class="navbar-form navbar-right"><button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#login_panel" type="button" id="sign_in_btn">Sign In</button></p>
+	    <p class="navbar-text navbar-right" id="name_logo"></p>
 	  </div><!-- /.navbar-collapse -->
 	</nav><!-- /navbar -->
 
@@ -53,7 +57,7 @@
 				</div>
 				<div class="modal-body">
 					<form class="form-horizontal" role="form">
-						<div id="error_panel_signin" class="alert alert-success" role="alert"></div>
+						<div id="error_panel_signin" class="alert alert-danger" role="alert"></div>
 						<div class="form-group">
 							<label for="input_usrname" class="col-lg-2 control-label">Username:</label>
 							<div class="col-lg-10">
@@ -76,7 +80,7 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary">Sign In</button>
+					<button type="submit" class="btn btn-primary" id="login_btn">Sign In</button>
 				</div>
 			</div>
 			</div>
@@ -94,7 +98,7 @@
 				</div>
 				<div class="modal-body">
 					<form class="form-horizontal" role="form">
-						<div id="error_panel_signup" class="alert alert-success" role="alert"></div>
+						<div id="error_panel_signup" class="alert alert-danger" role="alert"></div>
 						<div class="form-group">
 							<label for="username" class="col-lg-2 control-label">Username:</label>
 							<div class="col-lg-10">

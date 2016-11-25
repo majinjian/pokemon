@@ -10,7 +10,7 @@ import Cookie
 import os
 import json # used to send data back in JSON format
 import datetime # used to generate the system time
-import verification
+#import verification
 
 cgitb.enable() # enable debugging output in some cases
 
@@ -49,11 +49,11 @@ else:
   if "password" in cookie:
     password = cookie["password"].value
 
-  # do some username & password verifications
-  [stat, info] = login_verify(username, password)
+#  # do some username & password verifications
+ [stat, info] = verification.login_verify(username, password)
 
-  if stat:
-    data['user_name'] = username
+  # if stat:
+  data['user_name'] = username
   
   data['result'] = info
 

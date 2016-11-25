@@ -6,8 +6,9 @@ import Cookie
 import os
 import json # used to send data back in JSON format
 import datetime # used to generate the system time
-import database # used to interact with database
+# import database # used to interact with database
 import hashlib # used to cypt the password
+import verification
 
 # enable the cgi
 cgitb.enable()
@@ -25,7 +26,7 @@ print "Content-type: application/json"
 # if the remember me checkbox was clicled, set the cookie
 
 # do some username & password verifications
-[stat, info] = login_verify(usrname, pwd)
+[stat, info] = verification.login_verify(usrname, pwd)
 if remember == "true":
     # print "Hello, I send you a new cookie"
 
@@ -42,7 +43,6 @@ if remember == "true":
         data['user_name'] = usrname
 
     data['result'] = info
-
     # if cookie has been set
     if cookie:
         print cookie
