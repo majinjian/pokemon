@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 
 import cgitb
 import cgi
@@ -6,8 +6,9 @@ import Cookie
 import os
 import json # used to send data back in JSON format
 import datetime # used to generate the system time
-import database # used to interact with database
+#import database # used to interact with database
 import hashlib # used to cypt the password
+from verification import *
 
 # enable the cgi
 cgitb.enable()
@@ -21,6 +22,7 @@ pwd = login_form["password"].value # get the password from the table
 remember = login_form["remember_me"].value # get whether use status saving
 #
 print "Content-type: application/json"
+
 # print  # without printing a blank line, the "end of script output before headers" error will occur
 # if the remember me checkbox was clicled, set the cookie
 
@@ -47,6 +49,7 @@ if remember == "true":
     if cookie:
         print cookie
     print
+    print
     print json.dumps(data)
 
     # print json.dumps(data)
@@ -55,8 +58,13 @@ if remember == "true":
 else:
     # print "Hello, I won't send you a cookie."
     if stat:
+        # create the cookie without expire
+        cookie = Cookie.SimpleCookie()
+        cookie['user_name'] = usrname
+        cookie['password'] = pwd
         data['user_name'] = usrname
-
+        print cookie
+        
     data['result'] = info
 
     print

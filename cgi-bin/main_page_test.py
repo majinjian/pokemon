@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 
 # use cookie for persistant data storage
 # if no cookie, return the login page
@@ -10,7 +10,7 @@ import Cookie
 import os
 import json # used to send data back in JSON format
 import datetime # used to generate the system time
-import verification
+from verification import *
 
 cgitb.enable() # enable debugging output in some cases
 

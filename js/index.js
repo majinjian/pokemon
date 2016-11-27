@@ -4,13 +4,12 @@
  * Javascript for Login page for cookie check
  * 
  */
-$(document).ready(function(){  
-     alert("Hello World");  
+$(document).ready(function(){
      send_cookie();
      $('#login_btn').click(login);
      $('#logout').click(logout);
 
-});  
+});
 
 
 
@@ -25,7 +24,6 @@ var send_cookie = function () {
     //  error: a function to execute if the request fails for any reason
     $.ajax({
         url: '../cgi-bin/main_page_test.py',  // lecture 8 script to query the pizza database
-
         type: "POST",                  // GET or POST
 
         dataType: "json",             // json format
@@ -49,8 +47,6 @@ var send_cookie = function () {
         },
 
         error: function(request) {   // function to call when the request fails, other errors
-            console.log("Error!");
-            console.log(request);
             error_handler();
         }
     });
@@ -147,6 +143,8 @@ var success_handler = function(data) {
     $('#signup').empty();
     $('#name_logo').html('Welcome! ' + data.user_name);
     $('#login_panel').hide();
+    //display post field by Ma Jinjian
+    $('#post-field').css("display","block")
 
     // console.log(data.password)
 
