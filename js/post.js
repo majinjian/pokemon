@@ -4,27 +4,30 @@ var post_array = new Array();
 /**
  * retrieve posts
  */
-$.ajax({
-	url: "/cgi-bin/postHandler.py",
-		
-	type: "POST",
+function load_posts() {
+	$.ajax({
+		url: "/cgi-bin/postHandler.py",
+			
+		type: "POST",
 
-	dataType: "json",
+		dataType: "json",
 
-	success: function(data) {
-		posts = JSON.parse(data);
-		if(posts.length > 0) {
-			posts.forEach(function(element){
-				post_array.push(element);
-			});
-			display_posts();
+		success: function(data) {
+			posts = JSON.parse(data);
+			if(posts.length > 0) {
+				posts.forEach(function(element){
+					post_array.push(element);
+				});
+				display_posts();
+			}
+		},
+
+		error: function(data) {
+			alert(data);
 		}
-	},
+	});
+}
 
-	error: function(data) {
-		alert(data);
-	}
-});
 
 
 

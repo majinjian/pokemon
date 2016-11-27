@@ -8,8 +8,8 @@ $(document).ready(function(){
      send_cookie();
      $('#login_btn').click(login);
      $('#logout').click(logout);
-
-});
+     $('#signup_btn').click(signup);
+});  
 
 
 
@@ -32,14 +32,14 @@ var send_cookie = function () {
           console.log("Send Cookie");
           console.log(data);
         	if (data.user_name != "nil") { // return a cookie
-            // success_handler(data)
-            login_result = data.result;
-            if (login_result == "success") {
-              success_handler(data);
-            }
-            else {
-              login_error(login_result);
-            }
+            success_handler(data)
+            // login_result = data.result;
+            // if (login_result == "success") {
+            //   success_handler(data);
+            // }
+            // else {
+            //   login_error(login_result);
+            // }
         	}
         	else { // no cookie or error
 	           error_handler();
@@ -57,13 +57,13 @@ var send_cookie = function () {
 var login = function () {
 
   var user_id = $('#username').val();
-  var pwd = $('#pwd').val();
+  var pwd = $('#password').val();
   var remember = $('#remember_me').prop("checked");
   console.log(user_id);
   console.log(pwd);
   console.log(remember);
-  if (user_id == "" ||pwd == "") {
-    $('#error_log').html("Your Username or Password cannot be left empty!!!")
+  if (user_id == "" || pwd == "") {
+    $('#error_panel_signin').html("Your Username or Password cannot be left empty!!!")
   }
 
   $.ajax({
@@ -72,11 +72,14 @@ var login = function () {
 
     type: "POST",
 
-    data: {
-      user_id: user_id,
-      password: pwd,
-      remember_me: remember
-    },
+    data: "user_id=" + user_id +
+          "&password=" + pwd +
+          "&remember_me=" + remember,
+    // {
+    //   user_id: user_id,
+    //   password: pwd,
+    //   remember_me: remember
+    // },
 
     // dataType: "json",
 
@@ -84,12 +87,13 @@ var login = function () {
     success: function (data) {
         console.log("Success Login");
         login_result = data.result;
-        if (login_result == "success") {
-          success_handler(data);
-        }
-        else {
-          login_error(login_result);
-        }
+        success_handler(data);
+        // if (login_result == "success") {
+        //   success_handler(data);
+        // }
+        // else {
+        //   login_error(login_result);
+        // }
     },
 
     error: function (request,status, error) {
@@ -99,6 +103,11 @@ var login = function () {
         error_handler()
     }
   });
+}
+
+// call when signup button clicked
+var signup = function() {
+
 }
 
 // when the user click the logout button on the screen
@@ -134,37 +143,42 @@ var success_handler = function(data) {
 
     console.log("success!");
     console.log(data);
-    $('#home').html("<a class='active' href='#home'>Home</a>");
-    $('#news').html("<a href='#home'>News</a>");
-    $('#pokemon').html("<a href='#pokemon'>Pokemon</a>");
-    $('#contact').html("<a href='#home'>Contact</a>");
+    $('#home').html("<a>Home</a>");
+    $('#posts').html("<a href='#posts'>Posts</a>");
+    $('#pokemons').html("<a href='#pokemons'>Pokemon</a>");
     $('#profile').html("<a href='#profile'>Profile</a>");
-    $('#logout').html("<a>Logout</a>");
-    $('#signup').empty();
+    $('#logout').html("<a>Log Out</a>");
+    // $('#login_panel').empty();
+    $('#sign_in_btn').hide();
+    $('#sign_up_btn').hide();
     $('#name_logo').html('Welcome! ' + data.user_name);
     $('#login_panel').hide();
     //display post field by Ma Jinjian
     $('#post-field').css("display","block")
-
+    load_posts();
     // console.log(data.password)
 
 }
 
 var login_error = function(err_msg) {
     error_handler();
-    $('#error_log').html(err_msg);
+    $('#error_panel_signin').html(err_msg);
+}
+
+var signup_error = function(err_msg) {
+  error_handler();
+    $('#error_panel_signup').html(err_msg);
 }
 
 
 var error_handler = function() {
     $('#home').empty();
-    $('#news').empty();
-    $('#pokemon').empty();
-    $('#contact').empty();
+    $('#posts').empty();
+    $('#pokemons').empty();
     $('#profile').empty();
     $('#logout').empty();
-     // $('#login').html("<a href='../sign_in.html'>Log In</a>");
-    $('#signup').html("<a href='../sign_up.html'>Sign Up</a>");        
+     // $('#login').html("<a href='../sign_in.html'>Log In</a>"); 
+    $('#sign_in_btn').show();
+    $('#sign_up_btn').show();      
     $('#name_logo').html("Welcome! Sommoner");
-    $('#login_panel').show();
 }
