@@ -32,7 +32,7 @@ function load_posts() {
 
 
 /**
- * sned one post to server
+ * send one post to server
  */
 $("#post-send").click(function() {
 	$.ajax({

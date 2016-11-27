@@ -5,6 +5,8 @@
  * 
  */
 $(document).ready(function(){
+     cookie = document.cookie;
+     alert(cookie);
      send_cookie();
      $('#login_btn').click(login);
      $('#logout').click(logout);
@@ -32,14 +34,14 @@ var send_cookie = function () {
           console.log("Send Cookie");
           console.log(data);
         	if (data.user_name != "nil") { // return a cookie
-            success_handler(data)
-            // login_result = data.result;
-            // if (login_result == "success") {
-            //   success_handler(data);
-            // }
-            // else {
-            //   login_error(login_result);
-            // }
+            //success_handler(data)
+            login_result = data.result;
+            if (login_result == "success") {
+              success_handler(data);
+            }
+            else {
+              login_error(login_result);
+            }
         	}
         	else { // no cookie or error
 	           error_handler();
@@ -72,14 +74,11 @@ var login = function () {
 
     type: "POST",
 
-    data: "user_id=" + user_id +
-          "&password=" + pwd +
-          "&remember_me=" + remember,
-    // {
-    //   user_id: user_id,
-    //   password: pwd,
-    //   remember_me: remember
-    // },
+    data: {
+            user_id: user_id,
+            password: pwd,
+            remember_me: remember
+          },
 
     // dataType: "json",
 
@@ -87,13 +86,13 @@ var login = function () {
     success: function (data) {
         console.log("Success Login");
         login_result = data.result;
-        success_handler(data);
-        // if (login_result == "success") {
-        //   success_handler(data);
-        // }
-        // else {
-        //   login_error(login_result);
-        // }
+        //success_handler(data);
+        if (login_result == "success") {
+          success_handler(data);
+        }
+        else {
+          login_error(login_result);
+        }
     },
 
     error: function (request,status, error) {
@@ -136,7 +135,7 @@ var logout = function() {
         }
 
     });
-
+d
 }
 
 var success_handler = function(data) {
@@ -144,7 +143,7 @@ var success_handler = function(data) {
     console.log("success!");
     console.log(data);
     $('#home').html("<a>Home</a>");
-    $('#posts').html("<a href='#posts'>Posts</a>");
+    //$('#posts').html("<a href='#posts'>Posts</a>");
     $('#pokemons').html("<a href='#pokemons'>Pokemon</a>");
     $('#profile').html("<a href='#profile'>Profile</a>");
     $('#logout').html("<a>Log Out</a>");
